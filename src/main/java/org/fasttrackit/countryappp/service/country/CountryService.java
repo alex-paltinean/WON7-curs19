@@ -8,20 +8,29 @@ import java.util.List;
 
 @Service
 public class CountryService {
-    private final List<Country> countries;
 
-    public CountryService(/*@Qualifier("memoryCountryProvider")*/ CountryProvider countryProvider) {
-        this.countries = countryProvider.getCountries();
+    private final CountryRepository countryRepository;
+
+    public CountryService(CountryProvider countryProvider, CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+        countryRepository.saveAll(countryProvider.getCountries());
     }
 
     public List<Country> getAll() {
-        return countries;
+        return countryRepository.findAll();
     }
 
     public Country findById(int id) {
-        return countries.stream()
-                .filter(country -> country.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Country not found!"));
+        return countryRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Country not found"));
+    }
+
+    public Country save(Country country) {
+        return countryRepository.save(country);
+    }
+
+    public List<Country> findByContinent(String name){
+        return countryRepository.findByContinent(name);
     }
 }
