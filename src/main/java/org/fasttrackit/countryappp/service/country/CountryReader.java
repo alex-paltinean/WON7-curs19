@@ -1,5 +1,6 @@
 package org.fasttrackit.countryappp.service.country;
 
+import org.fasttrackit.countryappp.model.city.City;
 import org.fasttrackit.countryappp.model.country.Country;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
@@ -34,7 +35,7 @@ public class CountryReader implements CountryProvider {
 
     private Country lineToCountry(int id, String line) {
         String[] countryParts = line.split("\\|");
-        return new Country(id, countryParts[0], countryParts[1], Long.parseLong(countryParts[2]),
+        return new Country(id, countryParts[0], new City(countryParts[1]), Long.parseLong(countryParts[2]),
                 Double.parseDouble(countryParts[3]), countryParts[4],
                 countryParts.length > 5 ? parseNeighbours(countryParts[5]) : List.of());
     }
