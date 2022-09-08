@@ -17,8 +17,8 @@ public class LotteryTask {
 
     @Scheduled(fixedRateString = "${lottery.interval.seconds}", timeUnit = TimeUnit.SECONDS)
     public void pickWinner() {
-        Random random = new Random();
-        int i = random.nextInt(countryService.getAll().size());
-        System.out.println("Winner country is " + countryService.findById(i).getName());
+//        Random random = new Random();
+//        int i = random.nextInt(countryService.getAll().size());
+//        System.out.println("Winner country is " + countryService.findById(i).getName());
     }
 }
