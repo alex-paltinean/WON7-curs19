@@ -16,8 +16,10 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
     @Query("""
             select c from Country c where (:continentName is null or c.continent = :continentName) 
             and (:minPopulation is null or c.population > :minPopulation) 
-            and (:maxPopulation is null or c.population < :maxPopulation)""")
+            and (:maxPopulation is null or c.population < :maxPopulation)
+            and (:text is null or lower(c.name) like :text)""")
     List<Country> getAllFiltered(@Param("continentName") String continentName,
                                  @Param("minPopulation") Long minPopulation,
-                                 @Param("maxPopulation") Long maxPopulation);
+                                 @Param("maxPopulation") Long maxPopulation,
+                                 @Param("text") String text);
 }

@@ -18,8 +18,9 @@ public class CountryController {
     @GetMapping
     List<Country> getAll(@RequestParam(required = false) String continentName,
                          @RequestParam(required = false) Long minPopulation,
-                         @RequestParam(required = false) Long maxPopulation) {
-        return countryService.getAllFiltered(continentName, minPopulation, maxPopulation);
+                         @RequestParam(required = false) Long maxPopulation,
+                         @RequestParam(required = false) String text) {
+        return countryService.getAllFiltered(continentName, minPopulation, maxPopulation, text);
     }
 
     @GetMapping("{id}")
@@ -30,6 +31,11 @@ public class CountryController {
     @PostMapping
     Country save(@RequestBody Country country) {
         return countryService.save(country);
+    }
+
+    @PutMapping("{id}")
+    Country update(@RequestBody Country country, @PathVariable Integer id){
+        return countryService.update(country, id);
     }
 
     @DeleteMapping("{id}")
